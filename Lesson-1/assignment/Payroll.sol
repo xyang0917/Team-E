@@ -31,11 +31,7 @@ contract Payroll {
     }
     
     function getPaid() {
-        if (msg.sender != owner) {
-            revert();
-        }
-        
-        if (employee == 0x0) {
+        if (msg.sender != employee) {
             revert();
         }
         
