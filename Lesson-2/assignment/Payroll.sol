@@ -12,7 +12,6 @@ contract Payroll {
     address owner;
     Employee[] employees;
     
-    uint lastEmployeeCount = 0;
     uint totalSalary = 0;
     
     function Payroll() {
@@ -36,7 +35,9 @@ contract Payroll {
         require(msg.sender == owner);
         var (employee,index) = _findEmployee(employeeId);
         assert(employee.id == 0x0);
-        employees.push(Employee(employeeId,salary * 1 ether,now));
+        uint s = salary * 1 ether;
+        totalSalary += s;
+        employees.push(Employee(employeeId, s, now));
     }
     
     function removeEmployee(address employeeId) {
@@ -51,8 +52,6 @@ contract Payroll {
         delete employees[index];
         employees[index] = employees[employees.length - 1];
         employees.length -= 1;
-        
-        lastEmployeeCount = employees.length;
     }
     
     function addFund() payable returns (uint){
@@ -61,11 +60,7 @@ contract Payroll {
     
     // 优化后，减少遍历次数
     function calculateRunway() returns (uint) {
-        for (uint i = lastEmployeeCount; i < employees.length; i++) {
-            totalSalary += employees[i].salary;
-        }
         assert(totalSalary > 0);
-        lastEmployeeCount = employees.length;
         return this.balance / totalSalary;
     }
     
