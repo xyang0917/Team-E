@@ -7,4 +7,4 @@ contract K2 is A,C
 contract Z is K1,K2
 
 求contract Z的继承线：
-Z > K2 > K1 > C > A > B > O
+Z > K2 > C > K1 > B > A > O
