@@ -77,7 +77,7 @@ contract Payroll is Ownable {
     }
     
     // 修改员工薪水支付地址
-    function changePaymemntAddress(address newAddress) onlyOwner employeeExist(msg.sender) {
+    function changePaymemntAddress(address newAddress) employeeExist(msg.sender) {
         var employee = employees[msg.sender];
         employee.id = newAddress;
         employees[newAddress] = employee;
